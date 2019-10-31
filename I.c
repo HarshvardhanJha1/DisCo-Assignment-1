@@ -1,8 +1,6 @@
-// C program to print all permutations with duplicates allowed 
-#include <stdio.h> 
-#include <string.h> 
-  
-/* Function to swap values at two pointers */
+#include<stdlib.h>
+#include<stdio.h>
+#include<string.h>
 void swap(char *x, char *y) 
 { 
     char temp; 
@@ -10,12 +8,19 @@ void swap(char *x, char *y)
     *x = *y; 
     *y = temp; 
 } 
-
+  
+/* Function to print permutations of string 
+   This function takes three parameters: 
+   1. String 
+   2. Starting index of the string 
+   3. Ending index of the string. */
 void permute(char *a, int l, int r) 
 { 
    int i; 
-   if (l == r) 
-     printf("%s\n", a); 
+   if (l == r){
+      printf("%s\n", a);
+   } 
+      
    else
    { 
        for (i = l; i <= r; i++) 
@@ -27,12 +32,10 @@ void permute(char *a, int l, int r)
    } 
 } 
   
-/* Driver program to test above functions */
-int main() 
-{ 
-    char str[100];
-    scanf("%s",str); 
-    int n = strlen(str); 
-    permute(str, 0, n-1); 
-    return 0; 
-} 
+int main(){
+  char s[1000];
+  scanf("%s",s);
+  
+  permute(s,0,strlen(s)-1);
+
+}
