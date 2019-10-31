@@ -1,94 +1,77 @@
-#include<stdlib.h>
 #include<stdio.h>
-
-
-int main()
-{
+#include<stdlib.h>
+int main(){
     int n;
-    
-    char ans[26];
-    char ch[24];
-    
     scanf("%d",&n);
+    int x = n-2;
+    char characters[x];
+    int k=0;
+    char ch;
     for(int i=0;i<n;i++)
     {
-        scanf(" %c",&ch[i]);
-
-    }
-    
-    
-    
-    int f=0;
-    for(int r=0;r<n;r++)
-    {
-        if(ch[r]!='M'&&ch[r]!='B')
+        scanf(" %c",&ch);
+        if(ch!='M'&&ch!='B')
         {
-            ans[f]=ch[r];f++;
+            characters[k]=ch;
+            k++;
         }
     }
-    int new=(n-2)/2;
-    printf("M: ");
-    for(int f=0;f<new;f++)
-    {
-        printf("%c ",ans[f]);
-    }
-    printf("| B: ");
-    for(int f=new;f<(n-2);f++)
-    {
-        printf("%c ",ans[f]);
-    }
-    printf("\n");
-    printf("M: ");
-    for(int f=new;f<(n-2);f++)
-    {
-        printf("%c ",ans[f]);
-    }
-    printf("| B: ");
-    for(int f=0;f<new;f++)
-    {
-        printf("%c ",ans[f]);
-    }
-    printf("\n");
     
-    
-    for(int w=1;w<new;w++)
+    //all characters outside of M and B have been scanned
+    char arrm[12];
+    char arrb[12];
+    int ct1,indb,indc,indm;
+    int temp;
+    for(int i=0;i<(1<<(x));i++)
     {
-        for(int s=new;s<(n-2);s++)
+        ct1=0;
+        temp = i;
+        while(temp>0)
         {
-            char t=ans[s];
-            ans[s]=ans[w];
-            ans[w]=t;
-            
-            printf("M: ");
-            for(int p=0;p<new;p++)
+            if(temp%2)
             {
-                printf("%c ",ans[p]);
+                ct1++;
+            }
+            temp=temp/2;
+        }
+        //printf("%d ",ct1);
+        if (ct1==x/2)
+        {
+            temp=i;
+            indb=0;
+            indc=x-1;
+            indm=0;
+            for(int r=0;r<x;r++)
+            {
+                
+                if(temp%2)
+                {
+                    arrb[indb]=characters[indc];
+                    indc--;
+                    indb++;
+                }
+                else
+                {
+                    arrm[indm]=characters[indc];
+                    indc--;
+                    indm++;
+                }
+                temp=temp>>1;
+            }
+            printf("M: ");
+            for(int k=0;k<x/2;k++)
+            {
+                printf("%c ",arrm[k]);
             }
             printf("| B: ");
-            for(int p=new;p<(n-2);p++)
+            for (int k = 0; k < x/2; k++)
             {
-                printf("%c ",ans[p]);
+                printf("%c ",arrb[k]);
             }
-            printf("\n");
-            printf("M: ");
-            for(int p=new;p<(n-2);p++)
-            {
-                printf("%c ",ans[p]);
-            }
-            
-            printf("| B: ");
-            for(int p=0;p<new;p++)
-            {
-                printf("%c ",ans[p]);
-            }
-            
             printf("\n");
 
         }
 
+        }
+        return 0;
     }
-    return 0;
-    
-
-
-}
