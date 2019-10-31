@@ -1,116 +1,83 @@
-#include<stdlib.h>
 #include<stdio.h>
+#include<stdlib.h>
+long long int r[10][10];
+int flag[10][2];
+int n;
+int m;
+int iscol(int flag[10][2])
+{
+    int c=0;
+    for(int p=0;p<n;p++)
+    if(flag[p][1]==1)
+        c++;
+    return c;
 
-int a[1000];
-int p[1000];
-int c[1000];
-int r[100][100];
-int col[1000];
-int n,m;
-int iscol(int x)
-{
-    int g=0;
-    for(int i=1;i<col[x];i++)
-    {
-        if(r[x][i]!=0)
-        {
-            g=1;
-        }
-    }
-    return g;
-}
-void update(int w)
-{
-    int q=r[w][0];
-    r[w][0]=r[n][0];
-    r[n][0]=q;
-    int z=col[w];
-    col[w]=col[n];
-    col[n]=z;
-    if(col[w]>col[n])
-    {
-        for(int u=1;u<col[w];u++)
-        {
-            int f=r[w][u];
-            r[w][u]=r[n][u];
-            r[n][u]=f;
-        }
-    }
-    else
-    {
-        for(int u=1;u<col[n];u++)
-        {
-            int f=r[w][u];
-            r[w][u]=r[n][u];
-            r[n][u]=f;
-        }
-    }
-    
-    for(int g=0;g<n;g++)
-    {
-        for(int d=0;d<col[g];d++)
-        {
-            if(r[g][d]==r[n][0])
-            {
-                r[g][d]=0;
-            }
-        }
-    }
 }
 int main()
 {
+    scanf("%d ",&n);
+    long long a[n];
     
-    scanf("%d",&n);
     for(int i=0;i<n;i++)
     {
-        scanf(" %d",&a[i]);
-        r[i][0]=a[i];
-
+        scanf(" %lld",&a[i]);
+        flag[i][0]=a[i];
+        flag[i][1]=1;
     }
     scanf(" %d",&m);
-    for(int i=0;i<m;i++)
+    long long preadv[m][2];
+    for(int y=0;y<m;y++)
     {
-        scanf(" %d %d",&p[i],&c[i]);
+        scanf(" %lld %lld",&preadv[y][0],&preadv[y][1]);
+    }
+    int preadvind[m][2];
+    for(int j=0;j<m;j++)
+    {
+        for(int i=0;i<n;i++)
+        {
+            if(a[i]==preadv[j][0])
+            {
+                preadvm[j][0]=i; 
+            }
+            if(a[i]==preadv[j][1])
+            {
+                preadvm[j][1]=i;
+            }    
 
+        }
     }
     
-    int k;
-    for(int i=0;i<n;i++)
+    for(int i=0;i<m;i++)
     {
-        k=1;
-        for(int j=0;j<m;j++)
-        {
-            if(c[j]==a[i])
-            {
-                r[i][k]=p[j];k++;
-            }
-        }
-        col[i]=k;
+        r[preadvm[i][0]][preadvm[i][1]]=1;
     }
-    //check if default elements of r are 0;
-        int y;
-        while(n>0)
-         {
-             y=0;
-            while(y<n)
+    int col;
+    while(iscol(flag))
+    {
+        
+        for(int i=0;i<n;i++)
+        {
+            if(flag[i][1]==1)
             {
-                if(iscol(y)==0)
+                col=0;
+                for(int j=0;j<n;j++)
                 {
-                    printf("%d ",r[y][0]);
-                    n--;
-                    update(y);
+                    if(r[j][i]==1)
+                        col++;
+                }
+                if(col==0)
+                {
+                    printf("%d ",flag[i][0]);
+                    flag[i][1]=0;
+                    for(int h=0;h<n;h++)
+                        r[i][h]=0;
                     break;
                 }
-                else
-                {
-                    y++;
-                }
-                
-            }    
-         } 
-         printf("\n");
+            }
+        }
+    }
+    printf("\n");
+
 
     return 0;
-
-
 }
