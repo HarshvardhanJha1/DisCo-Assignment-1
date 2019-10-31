@@ -1,49 +1,33 @@
 #include<stdio.h>
-#include<stdlib.h>
+#include<string.h>
 
-char a[1000];
-int m;
-char c[325];
-char d[325];
-void update()
+int main(int argc, char const *argv[])
 {
-   for(int i=0;i<m;i++)
-   {
-        for(int j=0;j<m;j++)
-        {
-                if((d[i]==c[j])&&(i!=j))
-                {
-                    d[i]=d[j];
-                }
+    char str[10001],a,b,x;
+    scanf("%s",str);
+    int m,map[256];
+    for (int i = 0; i < 256; i++)
+    {
+        map[i] = -1;
+    }
+    
+    scanf("%d",&m);
+    for (int i = 0; i < m; i++)
+    {
+        scanf(" %c %c",&a,&b);
+        map[a] = b;
+    }
+    
+    for (int i = 0; i < strlen(str); i++)
+    {
+        x = str[i];
+        while(map[x]!=-1){
+            x = map[x];
         }
-   }
-}
+        str[i]=x;
+    }
+    
+    printf("%s",str);
 
-int main()
-{
-    fgets(a,1001,stdin);
-    int n;
-    for(n=0;n<1001;n++)
-   {
-       if(a[n]=='\n')
-        break;
-   }
-   c[n]='\0';
-   scanf("%d",&m);
-   for(int i=0;i<m;i++)
-   {
-       scanf(" %c %c",&c[i],&d[i]);
-
-   }
-   update();
-   for(int t=0;t<n;t++)
-   {
-       for(int z=0;z<m;z++)
-       {
-           if(a[t]==c[z])
-           a[t]=d[z];
-       }
-   }
-    printf("%s\n",a);
     return 0;
 }
